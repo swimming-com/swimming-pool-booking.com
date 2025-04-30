@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -84,12 +85,13 @@
 <body>
   <div class="container">
     <img src="swimming.jpg" alt="Swimming Pool" class="hero">
-    <h1>Swimming Pool Booking</h1>
+    <h1>Swimming Pool Booking System</h1>
 
     <h2>Book a Session</h2>
     <form id="bookingForm">
       <input type="text" id="studentName" placeholder="Student Name" required>
       <input type="text" id="studentId" placeholder="Student ID" required>
+      <input type="email" id="studentEmail" placeholder="Student Email" required>
       <select id="day" required>
         <option value="">Select Day</option>
         <option value="Monday">Monday</option>
@@ -107,7 +109,8 @@
 
     <div class="section-divider"></div>
 
-    <h2>Cancel a Booking</h2>
+    <h2>Cancel Your Booking</h2>
+    <p style="text-align: center; font-style: italic; color: #555;">Student can cancel the booking within 01 hour after the initial booking. Thereafter, it cannot be cancelled.</p>
     <form id="cancelForm">
       <input type="text" id="cancelId" placeholder="Enter Your Booking ID" required>
       <button type="submit">Cancel Booking</button>

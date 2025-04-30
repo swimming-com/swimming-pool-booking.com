@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -26,7 +26,8 @@
     .hero {
       display: block;
       margin: 0 auto 30px auto;
-      max-width: 100%;
+      width: 70%;
+      height: auto;
       border-radius: 10px;
       box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
     }
@@ -41,6 +42,9 @@
       border-radius: 5px;
       border: 1px solid #ccc;
       font-size: 16px;
+    }
+    input:required:invalid, select:required:invalid {
+      border-color: red;
     }
     button {
       background-color: #007bff;
@@ -86,7 +90,7 @@
     <img src="swimming.jpg" alt="Swimming Pool" class="hero">
     <h1>Swimming Pool Booking System</h1>
 
-    <h2>Book a Session</h2>
+    <h2>Reserve Your Swimming Slot</h2>
     <form id="bookingForm">
       <input type="text" id="studentName" placeholder="Student Name" required>
       <input type="text" id="studentId" placeholder="Student ID" required>
@@ -103,16 +107,19 @@
         <option value="5-6 PM">5:00 PM to 6:00 PM</option>
         <option value="6-7 PM">6:00 PM to 7:00 PM</option>
       </select>
-      <button type="submit">Book Now</button>
+      <button type="submit">Confirm Reservation</button>
     </form>
 
     <div class="section-divider"></div>
 
-    <h2>Cancel Your Booking</h2>
-    <p style="text-align: center; font-style: italic; color: #555;">Student can cancel the booking within 01 hour after the initial booking. Thereafter, it cannot be cancelled.</p>
+    <h2>Cancel Your Reservation</h2>
+    <p style="text-align: center; font-style: italic; color: #555;">
+      Students may cancel their booking within <strong>1 hour</strong> of the original reservation time. 
+      Cancellations after this period will not be accepted.
+    </p>
     <form id="cancelForm">
-      <input type="text" id="cancelId" placeholder="Enter Your Booking ID" required>
-      <button type="submit">Cancel Booking</button>
+      <input type="text" id="cancelId" placeholder="Enter Your Booking ID to Cancel" required>
+      <button type="submit">Submit Cancellation</button>
     </form>
 
     <div class="section-divider"></div>

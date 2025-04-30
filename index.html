@@ -144,5 +144,114 @@
       </table>
     </div>
   </div>
+
+  <script>
+    let bookings = [];
+
+    function generateBookingId() {
+      return 'B' + (Math.floor(Math.random() * 90000) + 10000);
+    }
+
+    function updateDisplay() {
+      const grouped = {};
+      const bookingsDiv = document.getElementById('bookings');
+      bookingsDiv.innerHTML = '';
+
+      bookings.forEach(b => {
+        const key = `${b.day}-${b.timeslot}`;
+        if (!grouped[key]) grouped[key] = [];
+        grouped[key].push(b);
+      });
+
+      for (const key in grouped) {
+        const session = grouped[key];
+        const [day, timeslot] = key.split('-');
+        const isFull = session.length >= 20;
+
+        bookingsDiv.innerHTML += `<div class="session">
+          <strong>${day} ${timeslot}</strong> - ${isFull ? '<span class="full">FULL</span>' : '<span class="available">Available</span>'} (${session.length}/20)<br>
+          <small>Booking IDs: ${session.map(s => s.bookingId).join(', ')}</small>
+        </div>`;
+      }
+
+      const adminBody = document.querySelector('#adminTable tbody');
+      adminBody.innerHTML = '';
+      bookings.forEach(b => {
+        const status = bookings.filter(x => x.day === b.day && x.timeslot === b.timeslot).length >= 20 ? 'FULL' : 'Available';
+        const row = `<tr>
+          <td>${b.bookingId}</td>
+          <td>${b.studentName}</td>
+          <td>${b.studentId}</td>
+          <td>${b.day}</td>
+          <td>${b.timeslot}</td>
+          <td>${status}</td>
+        </tr>`;
+        adminBody.innerHTML += row;
+      });
+    }
+
+    document.getElementById('bookingForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = document.getElementById('studentName').value.trim();
+      const id = document.getElementById('studentId').value.trim();
+      const email = document.getElementById('studentEmail').value.trim();
+      const day = document.getElementById('day').value;
+      const timeslot = document.getElementById('timeslot').value;
+
+      const existing = bookings.find(b => b.studentId === id);
+      if (existing) {
+        alert('You have already booked a session. Multiple bookings are not allowed.');
+        return;
+      }
+
+      const sessionBookings = bookings.filter(b => b.day === day && b.timeslot === timeslot);
+      if (sessionBookings.length >= 20) {
+        alert('This session is full. Please choose another time.');
+        return;
+      }
+
+      const bookingId = generateBookingId();
+      bookings.push({ bookingId, studentName: name, studentId: id, studentEmail: email, day, timeslot, bookingTime: new Date() });
+      alert(`Booking successful! Your Booking ID is ${bookingId}`);
+      document.getElementById('bookingForm').reset();
+      updateDisplay();
+    });
+
+    document.getElementById('cancelForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const cancelId = document.getElementById('cancelId').value.trim();
+      const booking = bookings.find(b => b.bookingId === cancelId);
+
+      if (!booking) {
+        alert('Booking ID not found.');
+        return;
+      }
+
+      const diffHours = (new Date() - new Date(booking.bookingTime)) / 1000 / 3600;
+      if (diffHours > 1) {
+        alert('Cancellation period has expired.');
+        return;
+      }
+
+      bookings = bookings.filter(b => b.bookingId !== cancelId);
+      alert('Booking successfully cancelled.');
+      document.getElementById('cancelForm').reset();
+      updateDisplay();
+    });
+
+    function downloadCSV() {
+      let csv = 'Booking ID,Student Name,Student ID,Day,Timeslot\n';
+      bookings.forEach(b => {
+        csv += `${b.bookingId},${b.studentName},${b.studentId},${b.day},${b.timeslot}\n`;
+      });
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'bookings.csv';
+      link.click();
+    }
+
+    updateDisplay();
+  </script>
 </body>
 </html>

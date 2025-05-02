@@ -1,1 +1,143 @@
-placeholder
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Swimming Pool Booking System</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f0f8ff;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 960px;
+      margin: 40px auto;
+      padding: 40px;
+      background: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+    h1, h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #003366;
+    }
+    .hero {
+      display: block;
+      margin: 0 auto 30px auto;
+      max-width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+    }
+    form {
+      margin-bottom: 40px;
+    }
+    input, select, button {
+      display: block;
+      width: 100%;
+      padding: 12px 16px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+    button {
+      background-color: #007bff;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .session {
+      padding: 15px;
+      background-color: #eaf6ff;
+      border-left: 5px solid #007bff;
+      margin-bottom: 20px;
+      border-radius: 5px;
+    }
+    .full { color: red; font-weight: bold; }
+    .available { color: green; font-weight: bold; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      padding: 12px;
+      border: 1px solid #ccc;
+      text-align: center;
+    }
+    th {
+      background-color: #e0efff;
+      font-weight: bold;
+    }
+    .section-divider {
+      margin-top: 60px;
+      margin-bottom: 20px;
+      border-top: 2px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="swimming.jpg" alt="Swimming Pool" class="hero">
+    <h1>Swimming Pool Booking System</h1>
+
+    <h2>Book a Session</h2>
+    <form id="bookingForm">
+      <input type="text" id="studentName" placeholder="Student Name" required>
+      <input type="text" id="studentId" placeholder="Student ID" required>
+      <input type="email" id="studentEmail" placeholder="Student Email" required>
+      <select id="day" required>
+        <option value="">Select Day</option>
+        <option value="Monday">Monday</option>
+        <option value="Tuesday">Tuesday</option>
+        <option value="Friday">Friday</option>
+      </select>
+      <select id="timeslot" required>
+        <option value="">Select Timeslot</option>
+        <option value="4-5 PM">4:00 PM to 5:00 PM</option>
+        <option value="5-6 PM">5:00 PM to 6:00 PM</option>
+        <option value="6-7 PM">6:00 PM to 7:00 PM</option>
+      </select>
+      <button type="submit">Book Now</button>
+    </form>
+
+    <div class="section-divider"></div>
+
+    <h2>Cancel Your Booking</h2>
+    <p style="text-align: center; font-style: italic; color: #555;">Student can cancel the booking within 01 hour after the initial booking. Thereafter, it cannot be cancelled.</p>
+    <form id="cancelForm">
+      <input type="text" id="cancelId" placeholder="Enter Your Booking ID" required>
+      <button type="submit">Cancel Booking</button>
+    </form>
+
+    <div class="section-divider"></div>
+
+    <h2>Current Bookings</h2>
+    <div id="bookings"></div>
+
+    <div class="section-divider"></div>
+
+    <h2>Admin Dashboard</h2>
+    <button onclick="downloadCSV()">Download Bookings as CSV</button>
+    <table id="adminTable">
+      <thead>
+        <tr>
+          <th>Booking ID</th>
+          <th>Student Name</th>
+          <th>Student ID</th>
+          <th>Day</th>
+          <th>Timeslot</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</body>
+</html>

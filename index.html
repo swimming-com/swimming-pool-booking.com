@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,29 +6,42 @@
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f0f8ff;
+      background: #222;
       margin: 0;
       padding: 0;
+      position: relative;
+      min-height: 100vh;
+    }
+    body::before {
+      content: "";
+      background: url('swimming.jpg') no-repeat center center;
+      background-size: cover;
+      opacity: 0.08;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      position: absolute;
+      z-index: 0;
+    }
+    .overlay {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      padding: 40px 20px;
     }
     .container {
       max-width: 960px;
-      margin: 40px auto;
+      margin: auto;
       padding: 40px;
       background: #ffffff;
       border-radius: 10px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
     }
     h1, h2 {
       text-align: center;
       margin-bottom: 20px;
       color: #003366;
-    }
-    .hero {
-      display: block;
-      margin: 0 auto 30px auto;
-      max-width: 100%;
-      border-radius: 10px;
-      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
     }
     form {
       margin-bottom: 40px;
@@ -42,6 +54,9 @@
       border-radius: 5px;
       border: 1px solid #ccc;
       font-size: 16px;
+    }
+    input:required:invalid, select:required:invalid {
+      border-color: red;
     }
     button {
       background-color: #007bff;
@@ -83,61 +98,65 @@
   </style>
 </head>
 <body>
-  <div class="container">
-    <img src="swimming.jpg" alt="Swimming Pool" class="hero">
-    <h1>Swimming Pool Booking System</h1>
+  <div class="overlay">
+    <div class="container">
+      <h1>Swimming Pool Booking System</h1>
 
-    <h2>Book a Session</h2>
-    <form id="bookingForm">
-      <input type="text" id="studentName" placeholder="Student Name" required>
-      <input type="text" id="studentId" placeholder="Student ID" required>
-      <input type="email" id="studentEmail" placeholder="Student Email" required>
-      <select id="day" required>
-        <option value="">Select Day</option>
-        <option value="Monday">Monday</option>
-        <option value="Tuesday">Tuesday</option>
-        <option value="Friday">Friday</option>
-      </select>
-      <select id="timeslot" required>
-        <option value="">Select Timeslot</option>
-        <option value="4-5 PM">4:00 PM to 5:00 PM</option>
-        <option value="5-6 PM">5:00 PM to 6:00 PM</option>
-        <option value="6-7 PM">6:00 PM to 7:00 PM</option>
-      </select>
-      <button type="submit">Book Now</button>
-    </form>
+      <h2>Reserve Your Swimming Slot</h2>
+      <form id="bookingForm">
+        <input type="text" id="studentName" placeholder="Student Name" required>
+        <input type="text" id="studentId" placeholder="Student ID" required>
+        <input type="email" id="studentEmail" placeholder="Student Email" required>
+        <select id="day" required>
+          <option value="">Select Day</option>
+          <option value="Monday">Monday</option>
+          <option value="Tuesday">Tuesday</option>
+          <option value="Friday">Friday</option>
+        </select>
+        <select id="timeslot" required>
+          <option value="">Select Timeslot</option>
+          <option value="4-5 PM">4:00 PM to 5:00 PM</option>
+          <option value="5-6 PM">5:00 PM to 6:00 PM</option>
+          <option value="6-7 PM">6:00 PM to 7:00 PM</option>
+        </select>
+        <button type="submit">Confirm Reservation</button>
+      </form>
 
-    <div class="section-divider"></div>
+      <div class="section-divider"></div>
 
-    <h2>Cancel Your Booking</h2>
-    <p style="text-align: center; font-style: italic; color: #555;">Student can cancel the booking within 01 hour after the initial booking. Thereafter, it cannot be cancelled.</p>
-    <form id="cancelForm">
-      <input type="text" id="cancelId" placeholder="Enter Your Booking ID" required>
-      <button type="submit">Cancel Booking</button>
-    </form>
+      <h2>Cancel Your Reservation</h2>
+      <p style="text-align: center; font-style: italic; color: #555;">
+        Students may cancel their booking within <strong>1 hour</strong> of the original reservation time. 
+        Cancellations after this period will not be accepted.
+      </p>
+      <form id="cancelForm">
+        <input type="text" id="cancelId" placeholder="Enter Your Booking ID to Cancel" required>
+        <button type="submit">Submit Cancellation</button>
+      </form>
 
-    <div class="section-divider"></div>
+      <div class="section-divider"></div>
 
-    <h2>Current Bookings</h2>
-    <div id="bookings"></div>
+      <h2>Current Bookings</h2>
+      <div id="bookings"></div>
 
-    <div class="section-divider"></div>
+      <div class="section-divider"></div>
 
-    <h2>Admin Dashboard</h2>
-    <button onclick="downloadCSV()">Download Bookings as CSV</button>
-    <table id="adminTable">
-      <thead>
-        <tr>
-          <th>Booking ID</th>
-          <th>Student Name</th>
-          <th>Student ID</th>
-          <th>Day</th>
-          <th>Timeslot</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
+      <h2>Admin Dashboard</h2>
+      <button onclick="downloadCSV()">Download Bookings as CSV</button>
+      <table id="adminTable">
+        <thead>
+          <tr>
+            <th>Booking ID</th>
+            <th>Student Name</th>
+            <th>Student ID</th>
+            <th>Day</th>
+            <th>Timeslot</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
   </div>
 </body>
 </html>
